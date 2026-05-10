@@ -11,13 +11,19 @@ public class CommandTime : ICommand
     {
         if (args.Length == 0)
         {
-            Debug.LogError("Requires an argument!");
+            TerminalManager.Instance.LogError("Requires an argument!");
             return false;
         }
 
         if (!float.TryParse(args[0], out float newTimeScale))
         {
-            Debug.LogError("Argument is not a valid number.");
+            TerminalManager.Instance.LogError("Argument is not a valid number.");
+            return false;
+        }
+
+        if (newTimeScale < 0f || newTimeScale > 10f)
+        {
+            TerminalManager.Instance.LogError("Time scale must be between 0 and 10.");
             return false;
         }
 
@@ -25,7 +31,7 @@ public class CommandTime : ICommand
         Time.timeScale = newTimeScale;
 
         // We also tell the TerminalUI to save this new speed, so when it closes, it restores this one instead of 1f
-        TerminalUI ui = GameObject.FindObjectOfType<TerminalUI>();
+        UITerminal ui = GameObject.FindObjectOfType<UITerminal>();
         if (ui != null)
         {
             ui.cachedTimeScale = newTimeScale;

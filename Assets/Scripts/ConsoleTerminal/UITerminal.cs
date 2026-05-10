@@ -1,14 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-public class TerminalUI : MonoBehaviour
+public class UITerminal : MonoBehaviour
 {
     [Header("UI References")]
     [Tooltip("Drag the visual console panel here (ConsolePanel)")]
     [SerializeField] private GameObject consolePanel;
-    
+
     [Tooltip("Drag the TextMeshPro Input Field here")]
     [SerializeField] private TMP_InputField inputField;
+
+    [Tooltip("Drag the TextMeshProUGUI text object used for the log display")]
+    [SerializeField] private TextMeshProUGUI logTextDisplay;
+
 
     [Header("Settings")]
     [Tooltip("Key to open/close the console. BackQuote is usually the key to the left of 1 (| or ~)")]
@@ -35,6 +39,19 @@ public class TerminalUI : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (TerminalManager.Instance != null)
+            TerminalManager.Instance.OnLogGenerated += ShowLog;
+    }
+
+    private void OnDisable()
+    {
+        if (TerminalManager.Instance != null)
+            TerminalManager.Instance.OnLogGenerated -= ShowLog;
+    }
+
+
     private void ToggleConsole()
     {
         // Toggle the current state. If off, turn it on. If on, turn it off.
@@ -46,7 +63,7 @@ public class TerminalUI : MonoBehaviour
         {
             cachedTimeScale = Time.timeScale; // Save the current time scale
             Time.timeScale = 0f; // Pause the game
-            
+
             // Auto-focus the input field so the user can type immediately
             inputField.ActivateInputField();
             inputField.Select();
@@ -67,5 +84,13 @@ public class TerminalUI : MonoBehaviour
         inputField.text = "";
         inputField.ActivateInputField();
         inputField.Select();
+    }
+
+    private void ShowLog(string message, string color)
+    {
+        if (logTextDisplay == null) return;
+
+        // Rich text format: <color=value>text</color>
+        logTextDisplay.text += $"<color={color}>{message}</color>\n";
     }
 }
