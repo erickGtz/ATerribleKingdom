@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
 
 public class UITerminal : MonoBehaviour
@@ -21,6 +22,9 @@ public class UITerminal : MonoBehaviour
     // We store the timescale here so if a command changes it, we restore the new value when closing
     public float cachedTimeScale = 1f;
 
+    private List<string> commandsHistory = new List<string>();
+    private int currentHistoryIndex = 0;
+
     private void Start()
     {
         // For safety, ensure the console is turned off when the game starts
@@ -36,6 +40,18 @@ public class UITerminal : MonoBehaviour
         if (Input.GetKeyDown(toggleKey))
         {
             ToggleConsole();
+        }
+
+        if (consolePanel.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                ShowCommandHistory(-1);
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                ShowCommandHistory(1);
+            }
         }
     }
 
@@ -71,6 +87,8 @@ public class UITerminal : MonoBehaviour
 
             if (InputManager.Instance != null)
                 InputManager.Instance.enabled = false;
+
+            currentHistoryIndex = commandsHistory.Count;
         }
         else // If it just turned off
         {
@@ -86,11 +104,39 @@ public class UITerminal : MonoBehaviour
         // We send the text to our core manager to process it
         TerminalManager.Instance.ProcessCommand(inputValue);
 
+        // Add the input to history if it's not empty
+        if (inputField.text.Trim().Length > 0)
+        {
+            commandsHistory.Add(inputValue);
+            currentHistoryIndex = commandsHistory.Count;
+        }
+
         // Clear the input field and re-focus it so they can type another command
         inputField.text = "";
         inputField.ActivateInputField();
         inputField.Select();
     }
+
+    // Ahora recibimos un -1 o un +1
+    private void ShowCommandHistory(int direction)
+    {
+        if (commandsHistory.Count == 0) return;
+
+        currentHistoryIndex += direction;
+
+        currentHistoryIndex = Mathf.Clamp(currentHistoryIndex, 0, commandsHistory.Count);
+
+        if (currentHistoryIndex == commandsHistory.Count)
+        {
+            inputField.text = "";
+        }
+        else
+        {
+            inputField.text = commandsHistory[currentHistoryIndex];
+            inputField.caretPosition = inputField.text.Length;
+        }
+    }
+
 
     private void ShowLog(string message, string color)
     {
