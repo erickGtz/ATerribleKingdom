@@ -29,8 +29,13 @@ public class TerminalManager : MonoBehaviour
     {
         commands.Clear();
 
+        // Set-time command
         CommandTime timeCmd = new CommandTime();
         commands.Add(timeCmd.CommandName, timeCmd);
+
+        // Help command
+        CommandHelp helpCmd = new CommandHelp();
+        commands.Add(helpCmd.CommandName, helpCmd);
     }
 
 
@@ -78,7 +83,7 @@ public class TerminalManager : MonoBehaviour
 
     public void LogMessage(string message)
     {
-        OnLogGenerated?.Invoke(message, "white");
+        OnLogGenerated?.Invoke(message, "#aaaaaa");
     }
 
     public void LogSuccess(string message)

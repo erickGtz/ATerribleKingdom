@@ -68,10 +68,16 @@ public class UITerminal : MonoBehaviour
             inputField.ActivateInputField();
             inputField.Select();
             inputField.text = ""; // Clear any previous text
+
+            if (InputManager.Instance != null)
+                InputManager.Instance.enabled = false;
         }
         else // If it just turned off
         {
             Time.timeScale = cachedTimeScale; // Resume the game with the saved (or modified) speed
+
+            if (InputManager.Instance != null)
+                InputManager.Instance.enabled = true;
         }
     }
 
