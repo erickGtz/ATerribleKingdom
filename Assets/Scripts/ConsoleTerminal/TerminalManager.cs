@@ -36,6 +36,10 @@ public class TerminalManager : MonoBehaviour
         // Help command
         CommandHelp helpCmd = new CommandHelp();
         commands.Add(helpCmd.CommandName, helpCmd);
+
+        // Kill command
+        CommandKill killCmd = new CommandKill();
+        commands.Add(killCmd.CommandName, killCmd);
     }
 
 
