@@ -12,6 +12,9 @@ public class TerminalManager : MonoBehaviour
     // First string is the message, second string is the color tag ("green", "red", etc)
     public event Action<string, string> OnLogGenerated;
 
+    [Header("Spawn Prefabs catalog")]
+    public GameObject[] spawnableUnits;
+
     private void Awake()
     {
         // Setup Singleton
@@ -40,9 +43,13 @@ public class TerminalManager : MonoBehaviour
         // Kill command
         CommandKill killCmd = new CommandKill();
         commands.Add(killCmd.CommandName, killCmd);
+
+        // Spawn command
+        CommandSpawn spawnCmd = new CommandSpawn();
+        commands.Add(spawnCmd.CommandName, spawnCmd);
     }
 
-
+    q
     /// <summary>
     /// Processes the raw string received from the UI
     /// </summary>

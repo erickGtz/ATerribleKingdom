@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class CommandKill : ICommand
 {
     public string CommandName => "kill";
-    public string Description => "Kills all the units selected.";
+    public string Description => "Kills all the units selected. Parameters: kill list, kill all, kill enemies, kill selected, or kill <UnitID>";
     private static Dictionary<int, Unit> cachedUnits = new Dictionary<int, Unit>();
 
     public bool ExecuteCommand(string[] args)

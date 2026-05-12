@@ -6,7 +6,7 @@ public class UITerminal : MonoBehaviour
 {
     [Header("UI References")]
     [Tooltip("Drag the visual console panel here (ConsolePanel)")]
-    [SerializeField] private GameObject consolePanel;
+    public GameObject consolePanel;
 
     [Tooltip("Drag the TextMeshPro Input Field here")]
     [SerializeField] private TMP_InputField inputField;
