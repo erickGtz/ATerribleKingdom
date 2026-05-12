@@ -49,7 +49,7 @@ public class TerminalManager : MonoBehaviour
         commands.Add(spawnCmd.CommandName, spawnCmd);
     }
 
-    q
+
     /// <summary>
     /// Processes the raw string received from the UI
     /// </summary>
