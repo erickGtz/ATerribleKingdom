@@ -45,5 +45,10 @@ Principales acciones:
  - Manipulacion del tiempo
  - Debugging visual y del entorno.
    - Encender las navmesh y hitboxes.
- - Manipulación de datos y estados de la IA.
+ - Manipulación de estados de la IA.
  - Economía y progresión. 
+
+ ### Futuras Actualizaciones (Backlog)
+ - Comandos de Economía y progresión.
+ - Dibujado visual de las rutas del NavMesh (Path visualization).
+ - Desvinculación de la cámara (Freecam).
