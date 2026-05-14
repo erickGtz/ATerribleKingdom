@@ -44,7 +44,6 @@ Principales acciones:
 
  - Manipulacion del tiempo
  - Debugging visual y del entorno.
-   - Encender las navmesh, colliders y hitboxes.
+   - Encender las navmesh y hitboxes.
  - Manipulación de datos y estados de la IA.
- - Desvinculaciond e la cámara 
  - Economía y progresión. 

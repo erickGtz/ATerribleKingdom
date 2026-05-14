@@ -47,6 +47,10 @@ public class TerminalManager : MonoBehaviour
         // Spawn command
         CommandSpawn spawnCmd = new CommandSpawn();
         commands.Add(spawnCmd.CommandName, spawnCmd);
+
+        // Show command
+        CommandShow showCmd = new CommandShow();
+        commands.Add(showCmd.CommandName, showCmd);
     }
 
 
@@ -67,9 +71,7 @@ public class TerminalManager : MonoBehaviour
         // For now, let's just log it to the Unity Console to prove it works!
         LogMessage(input);
 
-        // TODO in Phase 3: Split the string by spaces, identify the command, and execute it.
-
-        string[] splitArgsInput = rawInput.Split(' ');
+        string[] splitArgsInput = input.Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
         string commandName = splitArgsInput[0];
 
         if (commands.ContainsKey(commandName))
